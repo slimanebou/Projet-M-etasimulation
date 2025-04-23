@@ -34,7 +34,7 @@ make
 ## Questions implémentées
 | Question | Statut |
 |----------|--------|
-  Q1           ✅    
-  Q2           ✅    
-  Q3           ✅    
+  Q1       |    ✅    
+  Q2       |    ✅    
+  Q3       |    ✅    
   
