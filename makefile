@@ -17,8 +17,11 @@ test_q3:
 test_q4:
 	python tests.py q4
 
+test_q5:
+	python tests.py q5
+
 run_example:
-	@echo "Exemple d'exécution"
+	@echo "Exemple d'execution"
 	python automate.py
 
 clean:
