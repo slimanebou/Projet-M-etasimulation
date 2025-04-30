@@ -1,4 +1,4 @@
-from automate import AutomateCellulaire, Configuration, lire_automate_et_mot
+from automate import *
 
 def test_q1_automate():
     print(">>> Test Q1 : AutomateCellulaire")
@@ -53,11 +53,46 @@ def test_q3_lire_automate_et_mot():
     print("Lecture et initialisation réussies")
 
 
+def test_q4_calculer_prochaine_configuration():
+    print(">>> Test Q4 : Calcul de la prochaine configuration")
+
+    # Création d'un automate avec des règles
+    etats_permis = ['0', '1']
+    regles = {
+        ('1', '1', '1'): '0',
+        ('1', '1', '0'): '1',
+        ('1', '0', '1'): '1',
+        ('1', '0', '0'): '0',
+        ('0', '1', '1'): '1',
+        ('0', '1', '0'): '1',
+        ('0', '0', '1'): '1',
+        ('0', '0', '0'): '0',
+    }
+    automate = AutomateCellulaire(etats=etats_permis, regles=regles)
+
+    # Configuration initiale
+    config = Configuration(["0", "0", "0", "1", "0", "0", "0"])
+    print("Configuration initiale :", config.etats)
+
+    # Calcul de la nouvelle configuration
+    nouvelle_config = calculer_prochaine_configuration(automate, config)
+
+    # Configuration attendue avec les bords '□' inclus
+    expected = ['□', '0', '0', '1', '1', '0', '0', '0', '□']
+    print("Nouvelle Configuration avec bords :", nouvelle_config.etats)
+
+    # Vérification du résultat
+    assert nouvelle_config.etats == expected, f"Erreur dans la mise à jour de la configuration, attendu {expected}, obtenu {nouvelle_config.etats}"
+
+
+
+
 # Lancer tous les tests
 def run_all_tests():
     test_q1_automate()
     test_q2_configuration()
     test_q3_lire_automate_et_mot()
+    test_q4_calculer_prochaine_configuration()
 
 
 # Lancer un test spécifique depuis la ligne de commande
@@ -73,5 +108,8 @@ if __name__ == "__main__":
             test_q2_configuration()
         elif test_name == "q3":
             test_q3_lire_automate_et_mot()
+        elif test_name == "q4":
+            test_q4_calculer_prochaine_configuration()
+
         else:
             print(f"Aucun test nommé '{test_name}'")

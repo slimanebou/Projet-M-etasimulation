@@ -50,9 +50,45 @@ def lire_automate_et_mot(fichier: str, mot_entree: str) -> tuple[AutomateCellula
     return AutomateCellulaire(etats, transitions, etat_vide="□"), config
 
 
+# Question 4
+def calculer_prochaine_configuration(automate: AutomateCellulaire, config: Configuration) -> Configuration:
+    """
+    Calcule la prochaine configuration après un pas de calcul.
+    Les bords sont traités avec '0' comme voisin, mais l'affichage inclut □ pour représenter l'extension.
+    """
+    nouveaux_etats = []
+    n = len(config.etats)
+    
+    for i in range(n):
+        # Règles de transition : les bords voient '0' comme voisin
+        gauche = config.etats[i-1] if i > 0 else '0'
+        centre = config.etats[i]
+        droite = config.etats[i+1] if i < n-1 else '0'
+        
+        nouvel_etat = automate.transition((gauche, centre, droite))
+        nouveaux_etats.append(nouvel_etat)
+    
+    # On ajoute □ aux extrémités pour l'affichage, mais en interne, les transitions utilisent '0'
+    return Configuration([automate.etat_vide] + nouveaux_etats + [automate.etat_vide])
 
-automate, config = lire_automate_et_mot("examples/regles.txt", "0001000")
 
+
+
+
+"""automate, config = lire_automate_et_mot("examples/regles.txt", "0001000")
 print("États possibles :", automate.etats)
 print("Configuration initiale :", config.etats)
-print("Transition (1,1,0) ->", automate.transition(("1", "1", "0")))
+print("Transition (1,1,0) ->", automate.transition(("1", "1", "0")))"""
+
+
+
+
+
+
+
+if __name__ == "__main__":
+    automate, config = lire_automate_et_mot("examples/regles.txt", "0001000")
+    print("États possibles :", automate.etats)
+    print("Configuration initiale :", config.etats)
+    nouvelle_config = calculer_prochaine_configuration(automate, config)
+    print("Nouvelle Configuration  :", nouvelle_config.etats) 
