@@ -54,7 +54,7 @@ def lire_automate_et_mot(fichier: str, mot_entree: str) -> tuple[AutomateCellula
 def calculer_prochaine_configuration(automate: AutomateCellulaire, config: Configuration) -> Configuration:
     """
     Calcule la prochaine configuration après un pas de calcul.
-    Les bords sont traités avec '0' comme voisin, mais l'affichage inclut □ pour représenter l'extension.
+    Les bords sont traités avec '0' comme voisin.
     """
     nouveaux_etats = []
     n = len(config.etats)
@@ -68,12 +68,41 @@ def calculer_prochaine_configuration(automate: AutomateCellulaire, config: Confi
         nouvel_etat = automate.transition((gauche, centre, droite))
         nouveaux_etats.append(nouvel_etat)
     
-    # On ajoute □ aux extrémités pour l'affichage, mais en interne, les transitions utilisent '0'
-    return Configuration([automate.etat_vide] + nouveaux_etats + [automate.etat_vide])
+    return Configuration(nouveaux_etats)
 
 
 
-
+def simuler_automate(automate: AutomateCellulaire, config_initiale: Configuration, 
+                    mode_arret: str = 'pas', valeur_arret=None, afficher: bool = True):
+    configurations = [config_initiale]
+    pas = 0
+    
+    if afficher:
+        print(f"Configuration initiale: {''.join(config_initiale.etats)}")  # Retiré □
+    
+    while True:
+        if mode_arret == 'pas' and pas >= valeur_arret:
+            break
+            
+        nouvelle_config = calculer_prochaine_configuration(automate, configurations[-1])
+        
+        if mode_arret == 'stabilisation' and nouvelle_config.etats == configurations[-1].etats:
+            if afficher:
+                print(f"Stabilisation atteinte après {pas} pas")
+            break
+            
+        if mode_arret == 'transition' and valeur_arret in nouvelle_config.etats:
+            if afficher:
+                print(f"Transition '{valeur_arret}' atteinte après {pas} pas")
+            break
+            
+        configurations.append(nouvelle_config)
+        pas += 1
+        
+        if afficher:
+            print(f"Pas {pas}: {''.join(nouvelle_config.etats)}")  # Retiré □
+    
+    return configurations
 
 """automate, config = lire_automate_et_mot("examples/regles.txt", "0001000")
 print("États possibles :", automate.etats)
@@ -87,8 +116,26 @@ print("Transition (1,1,0) ->", automate.transition(("1", "1", "0")))"""
 
 
 if __name__ == "__main__":
-    automate, config = lire_automate_et_mot("examples/regles.txt", "0001000")
+    """automate, config = lire_automate_et_mot("examples/regles.txt", "0001000")
     print("États possibles :", automate.etats)
     print("Configuration initiale :", config.etats)
     nouvelle_config = calculer_prochaine_configuration(automate, config)
-    print("Nouvelle Configuration  :", nouvelle_config.etats) 
+    print("Nouvelle Configuration  :", nouvelle_config.etats) """
+
+    # Création d'un automate simple (règle 110)
+    regles = {
+        ('1', '1', '1'): '0',
+        ('1', '1', '0'): '1',
+        ('1', '0', '1'): '1',
+        ('1', '0', '0'): '0',
+        ('0', '1', '1'): '1',
+        ('0', '1', '0'): '1',
+        ('0', '0', '1'): '1',
+        ('0', '0', '0'): '0'
+    }
+
+    automate = AutomateCellulaire(etats=['0', '1'], regles=regles)
+    config = Configuration(['0', '0', '0', '1', '0', '0', '0'])
+
+    print("=== Test: Arrêt après 5 pas ===")
+    simuler_automate(automate, config, mode_arret='pas', valeur_arret=5)
