@@ -117,49 +117,53 @@ print("Transition (1,1,0) ->", automate.transition(("1", "1", "0")))"""
 def simuler_automate_avec_affichage(automate: AutomateCellulaire, config_initiale: Configuration, 
                                    mode_arret: str = 'pas', valeur_arret=None) -> list:
     """
-    Simule l'automate cellulaire en affichant chaque configuration de manière visuelle.
-    :param automate: L'automate cellulaire à simuler
-    :param config_initiale: Configuration de départ
-    :param mode_arret: 'pas', 'transition' ou 'stabilisation'
-    :param valeur_arret: Nombre de pas ou motif à atteindre
-    :return: Liste des configurations successives
+    Version finale avec symboles "✓" (vrai) et "✗" (faux) pour une meilleure lisibilite
     """
     configurations = [config_initiale]
     pas = 0
     
-    # Affichage initial
+    def afficher_config(etats):
+        """Convertit les etats en symboles visuels explicites"""
+        visuel = []
+        for e in etats:
+            if e == '0':
+                visuel.append('✗')  # Etat faux/inactif
+            elif e == '1':
+                visuel.append('✓')  # Etat vrai/actif
+            elif e == automate.etat_vide:
+                visuel.append('.')  # Etat vide == .
+            else:
+                visuel.append(e)     # Autres etats (affiches tels quels)
+        return ''.join(visuel)
+    
     print("Configuration initiale:")
-    print(''.join(config_initiale.etats))
+    print(f"|{afficher_config(config_initiale.etats)}|")  
     print()
     
     while True:
-        current_config = ''.join(configurations[-1].etats)
+        current_config = configurations[-1].etats
         
-        # Conditions d'arrêt
-        if mode_arret == 'transition' and valeur_arret in current_config:
-            print(f"Motif '{valeur_arret}' atteint après {pas} pas")
+        if mode_arret == 'transition' and valeur_arret in ''.join(current_config):
+            print(f"Motif '{valeur_arret}' atteint apres {pas} pas")
             break
-            
         if mode_arret == 'pas' and pas >= valeur_arret:
             break
             
-        # Calcul de la nouvelle configuration
         nouvelle_config = calculer_prochaine_configuration(automate, configurations[-1])
         configurations.append(nouvelle_config)
         pas += 1
         
-        # Affichage visuel
         print(f"Pas {pas}:")
-        # Remplacer les états par des caractères plus visuels
-        visuel = ''.join(['■' if e == '1' else '□' if e == '0' else e for e in nouvelle_config.etats])
-        print(visuel)
-        print()  # Ligne vide pour séparer les pas
+        print(f"|{afficher_config(nouvelle_config.etats)}|")
+        print()
         
         if mode_arret == 'stabilisation' and nouvelle_config.etats == configurations[-2].etats:
-            print(f"Stabilisation atteinte après {pas} pas")
+            print(f"Stabilisation atteinte apres {pas} pas")
             break
     
     return configurations
+
+
 
 
 
@@ -231,3 +235,5 @@ if __name__ == "__main__":
 
     # Simulation avec affichage visuel
     simuler_automate_avec_affichage(automate, config, mode_arret='pas', valeur_arret=5)"""
+    
+    
