@@ -72,42 +72,7 @@ def calculer_prochaine_configuration(automate: AutomateCellulaire, config: Confi
 
 
 
-"""def simuler_automate(automate: AutomateCellulaire, config_initiale: Configuration, 
-                    mode_arret: str = 'pas', valeur_arret=None, afficher: bool = True):
-    configurations = [config_initiale]
-    pas = 0
-    
-    if afficher:
-        print(f"Configuration initiale: {''.join(config_initiale.etats)}")
-    
-    while True:
-        current_config = configurations[-1].etats
-        current_str = ''.join(current_config)
-        
-        # Condition d'arret par motif
-        if mode_arret == 'transition' and valeur_arret in current_str:
-            if afficher:
-                print(f"Motif '{valeur_arret}' atteint apres {pas} pas")
-            break
-            
-        # Autres conditions d'arret...
-        
-        nouvelle_config = calculer_prochaine_configuration(automate, configurations[-1])
-        configurations.append(nouvelle_config)
-        pas += 1
-        
-        if afficher:
-            print(f"Pas {pas}: {''.join(nouvelle_config.etats)}")
-        
-        # Condition de stabilisation
-        if mode_arret == 'stabilisation' and nouvelle_config.etats == configurations[-2].etats:
-            if afficher:
-                print(f"Stabilisation atteinte apres {pas} pas")
-            break
-            
-        # Condition de pas maximum
-        if mode_arret == 'pas' and pas >= valeur_arret:
-            break"""
+# Question 5
 
 def simuler_automate(automate: AutomateCellulaire, config_initiale: Configuration, 
                     mode_arret: str = 'pas', valeur_arret=None, afficher: bool = True) -> list:
@@ -146,6 +111,55 @@ def simuler_automate(automate: AutomateCellulaire, config_initiale: Configuratio
 print("Etats possibles :", automate.etats)
 print("Configuration initiale :", config.etats)
 print("Transition (1,1,0) ->", automate.transition(("1", "1", "0")))"""
+
+
+# Question 6
+def simuler_automate_avec_affichage(automate: AutomateCellulaire, config_initiale: Configuration, 
+                                   mode_arret: str = 'pas', valeur_arret=None) -> list:
+    """
+    Simule l'automate cellulaire en affichant chaque configuration de manière visuelle.
+    :param automate: L'automate cellulaire à simuler
+    :param config_initiale: Configuration de départ
+    :param mode_arret: 'pas', 'transition' ou 'stabilisation'
+    :param valeur_arret: Nombre de pas ou motif à atteindre
+    :return: Liste des configurations successives
+    """
+    configurations = [config_initiale]
+    pas = 0
+    
+    # Affichage initial
+    print("Configuration initiale:")
+    print(''.join(config_initiale.etats))
+    print()
+    
+    while True:
+        current_config = ''.join(configurations[-1].etats)
+        
+        # Conditions d'arrêt
+        if mode_arret == 'transition' and valeur_arret in current_config:
+            print(f"Motif '{valeur_arret}' atteint après {pas} pas")
+            break
+            
+        if mode_arret == 'pas' and pas >= valeur_arret:
+            break
+            
+        # Calcul de la nouvelle configuration
+        nouvelle_config = calculer_prochaine_configuration(automate, configurations[-1])
+        configurations.append(nouvelle_config)
+        pas += 1
+        
+        # Affichage visuel
+        print(f"Pas {pas}:")
+        # Remplacer les états par des caractères plus visuels
+        visuel = ''.join(['■' if e == '1' else '□' if e == '0' else e for e in nouvelle_config.etats])
+        print(visuel)
+        print()  # Ligne vide pour séparer les pas
+        
+        if mode_arret == 'stabilisation' and nouvelle_config.etats == configurations[-2].etats:
+            print(f"Stabilisation atteinte après {pas} pas")
+            break
+    
+    return configurations
 
 
 
@@ -199,3 +213,21 @@ if __name__ == "__main__":
     
     print("\n=== Test 3: Vraie stabilisation avec verification ===")
     simuler_automate(automate, config, mode_arret='stabilisation')"""
+
+    # Exemple pour la fonction d'affichage
+    """regles_110 = {
+        ('0', '0', '0'): '0',
+        ('0', '0', '1'): '1',
+        ('0', '1', '0'): '1',
+        ('0', '1', '1'): '1',
+        ('1', '0', '0'): '0',
+        ('1', '0', '1'): '1',
+        ('1', '1', '0'): '1',
+        ('1', '1', '1'): '0'
+    }
+
+    automate = AutomateCellulaire(etats=['0', '1'], regles=regles_110)
+    config = Configuration(['0', '0', '0', '1', '0', '0', '0'])
+
+    # Simulation avec affichage visuel
+    simuler_automate_avec_affichage(automate, config, mode_arret='pas', valeur_arret=5)"""

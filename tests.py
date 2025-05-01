@@ -136,14 +136,41 @@ def test_q5_simulation():
     resultats = simuler_automate(automate_stab, config_stab, mode_arret='stabilisation', afficher=True)
     assert resultats[-1].etats == resultats[-2].etats, "Dernieres configs devraient etre identiques"
     
-    print("\nTous les tests de simulation passes avec succes")
+    print("\nTous les tests de simulation sont passes avec succes")
+
+def test_q6_affichage_visuel():
+    print(">>> Test Q6 : Affichage visuel de la simulation")
+    
+    # Regles pour la regle 110
+    regles_110 = {
+        ('0', '0', '0'): '0',
+        ('0', '0', '1'): '1',
+        ('0', '1', '0'): '1',
+        ('0', '1', '1'): '1',
+        ('1', '0', '0'): '0',
+        ('1', '0', '1'): '1',
+        ('1', '1', '0'): '1',
+        ('1', '1', '1'): '0'
+    }
+    automate = AutomateCellulaire(etats=['0', '1'], regles=regles_110)
+    config = Configuration(['0', '0', '0', '1', '0', '0', '0'])
+    
+    print("\nSimulation avec affichage visuel (5 pas):")
+    resultats = simuler_automate_avec_affichage(automate, config, mode_arret='pas', valeur_arret=5)
+    
+    # Verification que la simulation a bien fonctionné
+    assert (len(resultats) - 1) == 5, f"Devrait avoir 5 pas + config initiale (obtenu: {len(resultats)})"
+    
+    print("\nTest d'affichage visuel reussi")
+
 
 def run_all_tests():
     test_q1_automate()
     test_q2_configuration()
     test_q3_lire_automate_et_mot()
     test_q4_calculer_prochaine_configuration()
-    test_q5_simulation()  
+    test_q5_simulation()
+    test_q6_affichage_visuel()  
 
 if __name__ == "__main__":
     import sys
@@ -161,7 +188,7 @@ if __name__ == "__main__":
             test_q4_calculer_prochaine_configuration()
         elif test_name == "q5":  
             test_q5_simulation()
+        elif test_name == "q6":
+            test_q6_affichage_visuel()
         else:
             print(f"Aucun test nomme '{test_name}'")
-
-

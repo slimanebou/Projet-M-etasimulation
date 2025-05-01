@@ -20,6 +20,9 @@ test_q4:
 test_q5:
 	python tests.py q5
 
+test_q6:
+	python tests.py q6
+
 run_example:
 	@echo "Exemple d'execution"
 	python automate.py
