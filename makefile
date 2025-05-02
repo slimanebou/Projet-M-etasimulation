@@ -26,6 +26,9 @@ test_q6:
 test_q8:
 	python tests.py q8
 
+test_q9:
+	python tests.py q9
+
 
 
 run_example:

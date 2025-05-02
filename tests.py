@@ -189,6 +189,60 @@ def test_q8_turing_machine_structure():
     assert tm.etat_reject == 'q_reject', "Inadéquation etat reject"
 
 
+def test_q9_test_configuration():
+    # Création de la machine de Turing
+    machine = TuringMachine()
+    machine.etats = {'q0', 'q_accept', 'q_reject'}
+    machine.etat_initial = 'q0'
+    machine.etat_accept = 'q_accept'
+    machine.etat_reject = 'q_reject'
+    machine.transitions = {
+        'q0': {
+            '0': ('q0', '1', 'R'),
+            '1': ('q0', '0', 'R'),
+            '□': ('q_accept', '□', 'S')
+        }
+    }
+
+    # Entrée : "101" → attendu après inversion : "010"
+    tape = deque(['1', '0', '1', '□'])
+    config = TuringConfiguration(tape, head_position=0, current_state=machine.etat_initial)
+
+    # Fonction d'exécution
+    while config.current_state not in {machine.etat_accept, machine.etat_reject}:
+        symbole_lu = config.tape[config.head_position]
+        if config.current_state in machine.transitions and symbole_lu in machine.transitions[config.current_state]:
+            nouvel_etat, symbole_ecrit, direction = machine.transitions[config.current_state][symbole_lu]
+            config.tape[config.head_position] = symbole_ecrit
+            config.current_state = nouvel_etat
+
+            if direction == 'R':
+                config.head_position += 1
+                if config.head_position == len(config.tape):
+                    config.tape.append(machine.blank_symbol)
+            elif direction == 'L':
+                if config.head_position == 0:
+                    config.tape.appendleft(machine.blank_symbol)
+                else:
+                    config.head_position -= 1
+            # Si direction 'S', ne rien faire
+        else:
+            config.current_state = machine.etat_reject
+            break
+
+    # Résultat attendu : "010"
+    resultat = ''.join(config.tape).strip('□')
+    print("Ruban final :", resultat)
+    print("État final :", config.current_state)
+
+    # Test
+    assert resultat == "010", f"Échec : attendu '010', obtenu '{resultat}'"
+    assert config.current_state == machine.etat_accept, "Échec : la machine n'a pas terminé en état acceptant"
+
+    print("✅ Test réussi !")
+
+
+
 def run_all_tests():
     test_q1_automate()
     test_q2_configuration()
@@ -197,6 +251,7 @@ def run_all_tests():
     test_q5_simulation()
     test_q6_affichage_visuel() 
     test_q8_turing_machine_structure() 
+    test_q9_test_configuration()
 
 if __name__ == "__main__":
     import sys
@@ -218,5 +273,7 @@ if __name__ == "__main__":
             test_q6_affichage_visuel()
         elif test_name == "q8":
             test_q8_turing_machine_structure()
+        elif test_name == "q9":
+            test_q9_test_configuration()
         else:
             print(f"Aucun test nomme '{test_name}'")

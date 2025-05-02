@@ -180,7 +180,15 @@ class TuringMachine:
         self.etat_reject = None       # État rejetant (ex: 'q_reject')
 
 
-
+# Question 9 
+# Structure d'une configuration 
+# deque (double-ended queue) Ajouter à gauche ou à droite (appendleft, append)
+from collections import deque
+class TuringConfiguration:
+    def __init__(self, tape, head_position, current_state):
+        self.tape = tape                   # deque(['1','0','1','□',...])
+        self.head_position = head_position # Index entier
+        self.current_state = current_state # ex: 'q0'
 
 
 
