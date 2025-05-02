@@ -241,6 +241,41 @@ def test_q9_test_configuration():
 
     print("✅ Test réussi !")
 
+def test_q10_lecture_machine_turing():
+    print(">>> Test Q10 : Lecture de la machine de Turing depuis un fichier")
+
+    # Appel de la fonction lire_machine_turing avec un fichier d'exemple et un mot
+    mot = "10101"
+    tm, config = lire_machine_turing("examples/machine_exemple.txt", mot)
+
+    # Affichage des informations de la machine
+    print("Etat initial :", tm.etat_initial)
+    print("Etat acceptant :", tm.etat_accept)
+    print("Etat refusant :", tm.etat_reject)
+    print("Transitions :")
+    for etat, trans in tm.transitions.items():
+        for symbole, action in trans.items():
+            print(f"  {etat}, {symbole} -> {action}")
+
+    # Affichage de la configuration initiale
+    print("\nConfiguration initiale :")
+    print("Bande :", ''.join(config.tape))
+    print("Position de la tête :", config.head_position)
+    print("Symbole sous la tête :", config.tape[config.head_position])
+    print("État courant :", config.current_state)
+
+    # Assertions basiques pour vérifier que les données sont bien lues
+    assert tm.etat_initial == "q0"  # Par exemple, à adapter selon ton fichier
+    assert tm.etat_accept == "q_accept"
+    assert "q0" in tm.transitions
+    assert len(config.tape) > 0  # Vérifie que la bande n'est pas vide
+    assert config.head_position >= 0  # Position de la tête valide
+    assert config.current_state == "q0"  # État de la machine au début
+
+
+
+
+
 
 
 def run_all_tests():
@@ -252,6 +287,7 @@ def run_all_tests():
     test_q6_affichage_visuel() 
     test_q8_turing_machine_structure() 
     test_q9_test_configuration()
+    test_q10_lecture_machine_turing()
 
 if __name__ == "__main__":
     import sys
@@ -275,5 +311,7 @@ if __name__ == "__main__":
             test_q8_turing_machine_structure()
         elif test_name == "q9":
             test_q9_test_configuration()
+        elif test_name == "q10":
+            test_q10_lecture_machine_turing()
         else:
             print(f"Aucun test nomme '{test_name}'")

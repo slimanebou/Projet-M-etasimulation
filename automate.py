@@ -1,3 +1,5 @@
+import sys
+sys.stdout.reconfigure(encoding='utf-8')
 
 # Question 1
 # structure d'un automate celluraie
@@ -192,6 +194,44 @@ class TuringConfiguration:
 
 
 
+def lire_machine_turing(fichier: str, mot_entree: str) -> tuple[TuringMachine, TuringConfiguration]:
+    tm = TuringMachine()
+    
+    with open(fichier, 'r', encoding='utf-8') as f:
+        for ligne in f:
+            ligne = ligne.strip()
+            if not ligne or ligne.startswith('#'):
+                continue
+
+            if '->' in ligne:
+                # Ligne de transition : q0,0 -> q1,1,D
+                gauche, droite = ligne.split('->')
+                etat_actuel, symbole_lu = [x.strip() for x in gauche.strip().split(',')]
+                nouvel_etat, symbole_ecrit, direction = [x.strip() for x in droite.strip().split(',')]
+
+                if etat_actuel not in tm.transitions:
+                    tm.transitions[etat_actuel] = {}
+
+                tm.transitions[etat_actuel][symbole_lu] = (nouvel_etat, symbole_ecrit, direction)
+                tm.etats.update([etat_actuel, nouvel_etat])
+                tm.alphabet.update([symbole_lu, symbole_ecrit])
+
+            elif ligne.startswith('init:'):
+                tm.etat_initial = ligne.split(':')[1].strip()
+            elif ligne.startswith('accept:'):
+                tm.etat_accept = ligne.split(':')[1].strip()
+            elif ligne.startswith('reject:'):
+                tm.etat_reject = ligne.split(':')[1].strip()
+
+    # Initialisation de la bande et de la configuration
+    tape = deque(mot_entree)
+    config = TuringConfiguration(tape=tape, head_position=0, current_state=tm.etat_initial)
+
+    return tm, config
+
+
+
+
 
 if __name__ == "__main__":
     #q1 -- q3
@@ -265,5 +305,20 @@ if __name__ == "__main__":
 
     # Simulation avec affichage visuel
     simuler_automate_avec_affichage(automate, config, mode_arret='pas', valeur_arret=5)"""
-    
-    
+
+
+    """mot = "10101"
+    tm, config = lire_machine_turing("examples/machine_exemple.txt", mot)
+
+    print("État initial :", tm.etat_initial)
+    print("État acceptant :", tm.etat_accept)
+    print("Transitions :")
+    for etat, trans in tm.transitions.items():
+        for symbole, action in trans.items():
+            print(f"  {etat}, {symbole} -> {action}")
+
+    print("\nConfiguration initiale :")
+    print("Bande :", ''.join(config.tape))
+    print("Position de la tête :", config.head_position)
+    print("Symbole sous la tête :", config.tape[config.head_position])
+    print("État courant :", config.current_state)"""
