@@ -1,3 +1,5 @@
+
+# Question 1
 # structure d'un automate celluraie
 class AutomateCellulaire:
     def __init__(self, etats: list, regles: dict,  etat_vide='□'):
@@ -22,7 +24,7 @@ class AutomateCellulaire:
     
 
 
-
+#Question 2
 # structure d'une configuration
 class Configuration:
     def __init__(self, etats: list):
@@ -30,6 +32,7 @@ class Configuration:
         self.etats = [str(e) for e in etats]  # Conversion en string
 
 
+# Question 3
 def lire_automate_et_mot(fichier: str, mot_entree: str) -> tuple[AutomateCellulaire, Configuration]:
     etats = set()
     transitions = {}
@@ -107,15 +110,10 @@ def simuler_automate(automate: AutomateCellulaire, config_initiale: Configuratio
     
     return configurations
 
-"""automate, config = lire_automate_et_mot("examples/regles.txt", "0001000")
-print("Etats possibles :", automate.etats)
-print("Configuration initiale :", config.etats)
-print("Transition (1,1,0) ->", automate.transition(("1", "1", "0")))"""
-
 
 # Question 6
 def simuler_automate_avec_affichage(automate: AutomateCellulaire, config_initiale: Configuration, 
-                                   mode_arret: str = 'pas', valeur_arret=None) -> list:
+                                    mode_arret: str = 'pas', valeur_arret=None) -> list:
     """
     Version finale avec symboles "✓" (vrai) et "✗" (faux) pour une meilleure lisibilite
     """
@@ -164,6 +162,22 @@ def simuler_automate_avec_affichage(automate: AutomateCellulaire, config_initial
     return configurations
 
 
+# Question 8 
+# structure de maching de turing 
+class TuringMachine:
+    def __init__(self):
+        self.etats = set()           # Ensemble des états (ex: {'q0', 'q1', 'q_accept', 'q_reject'})
+        self.alphabet = {'0', '1', '□'} # Alphabet de travail (0, 1, et le symbole blanc □)
+        self.blank_symbol = '□'        # Symbole blanc
+        self.input_alphabet = {'0', '1'} # Alphabet d'entrée (sous-ensemble de l'alphabet de travail)
+        
+        # Fonction de transition : un dictionnaire de dictionnaires de tuples
+        # Format : {état: {symbole: (nouvel_état, symbole_écrit, direction)}}
+        self.transitions = {}
+        
+        self.etat_initial = None      # État initial (ex: 'q0')
+        self.etat_accept = None       # État acceptant (ex: 'q_accept')
+        self.etat_reject = None       # État rejetant (ex: 'q_reject')
 
 
 
@@ -172,6 +186,14 @@ def simuler_automate_avec_affichage(automate: AutomateCellulaire, config_initial
 
 
 if __name__ == "__main__":
+    #q1 -- q3
+    """automate, config = lire_automate_et_mot("examples/regles.txt", "0001000")
+    print("Etats possibles :", automate.etats)
+    print("Configuration initiale :", config.etats)
+    print("Transition (1,1,0) ->", automate.transition(("1", "1", "0")))"""
+
+
+
     """automate, config = lire_automate_et_mot("examples/regles.txt", "0001000")
     print("Etats possibles :", automate.etats)
     print("Configuration initiale :", config.etats)

@@ -164,13 +164,39 @@ def test_q6_affichage_visuel():
     print("\nTest d'affichage visuel reussi")
 
 
+
+def test_q8_turing_machine_structure():
+    # Création d'une machine de Turing minimale
+    tm = TuringMachine()
+    
+    # Exemple d'initialisation et vérification des valeurs
+    tm.etats = {'q0', 'q1'}
+    tm.alphabet = {'0', '1', '□'}
+    tm.blank_symbol = '□'
+    tm.transitions = {
+        'q0': {'0': ('q1', '1', 'R')}
+    }
+    tm.etat_initial = 'q0'
+    tm.etat_accept = 'q_accept'
+    tm.etat_reject = 'q_reject'
+    
+    # Assertions sur les valeurs
+    assert 'q0' in tm.etats, "State 'q0' not found"
+    assert '0' in tm.alphabet, "Symbol '0' not found"
+    assert tm.transitions['q0']['0'] == ('q1', '1', 'R'), "Transition incorrecte"
+    assert tm.etat_initial == 'q0', "Inadéquation etat Initial "
+    assert tm.etat_accept == 'q_accept', "Inadéquation etat eccept "
+    assert tm.etat_reject == 'q_reject', "Inadéquation etat reject"
+
+
 def run_all_tests():
     test_q1_automate()
     test_q2_configuration()
     test_q3_lire_automate_et_mot()
     test_q4_calculer_prochaine_configuration()
     test_q5_simulation()
-    test_q6_affichage_visuel()  
+    test_q6_affichage_visuel() 
+    test_q8_turing_machine_structure() 
 
 if __name__ == "__main__":
     import sys
@@ -190,5 +216,7 @@ if __name__ == "__main__":
             test_q5_simulation()
         elif test_name == "q6":
             test_q6_affichage_visuel()
+        elif test_name == "q8":
+            test_q8_turing_machine_structure()
         else:
             print(f"Aucun test nomme '{test_name}'")
