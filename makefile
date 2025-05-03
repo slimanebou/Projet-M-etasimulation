@@ -35,6 +35,9 @@ test_q10:
 test_q11:
 	python tests.py q11
 
+test_q12:
+	python tests.py q12
+
 
 
 run_example:

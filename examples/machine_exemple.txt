@@ -1,10 +1,20 @@
+# Machine qui lit les 3 premiers symboles et accepte si le 3ème est '1'
 init: q0
 accept: q_accept
 reject: q_reject
-q0,0 -> q0,0,D
 
-q0,1 -> q1,0,D
+# Transitions
+# Pas 1 : Lire le 1er symbole (toujours avancer)
+q0,0 -> q1,0,D
+q0,1 -> q1,1,D
+q0,□ -> q_reject,□,D  # Mot trop court
 
+# Pas 2 : Lire le 2ème symbole
+q1,0 -> q2,0,D
+q1,1 -> q2,1,D
+q1,□ -> q_reject,□,D  # Mot trop court
 
-
-q0,□ -> q_accept,□,G
+# Pas 3 : Lire le 3ème symbole -> Accepte si '1'
+q2,0 -> q_reject,0,D  # Rejette si 3ème = '0'
+q2,1 -> q_accept,1,D  # Accepte si 3ème = '1'
+q2,□ -> q_reject,□,D  # Mot trop court

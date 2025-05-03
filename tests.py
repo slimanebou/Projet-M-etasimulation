@@ -280,7 +280,7 @@ def test_q11_turing_machine_pas():
     mot = "10101"
 
     # Appel de la fonction lire_machine_turing avec un fichier d'exemple et un mot
-    tm, config = lire_machine_turing("examples/machine_exemple.txt", mot)
+    tm, config = lire_machine_turing("examples/machine_exemple2.txt", mot)
 
     print("Avant le pas :")
     print("  État :", config.current_state)
@@ -303,6 +303,29 @@ def test_q11_turing_machine_pas():
     print("✅ Test réussi !")
 
 
+def test_q12_turing_accept_reject():
+    print(">>> Test Q12 : Turing - acceptation et rejet\n")
+
+    # Mot accepté
+    mot1 = "101"
+    tm1, _ = lire_machine_turing("examples/machine_exemple.txt", mot1)
+    resultat1 = simuler_machine_turing(mot1, tm1).lower()
+    assert resultat1 == "accept", f"Mot '{mot1}' devrait être accepté, obtenu: {resultat1}"
+    print(f"Résultat pour '{mot1}': {resultat1}")  # Résultat attendu : "accepté"
+
+
+    # Mot rejeté
+    mot2 = "110"
+    tm2, _ = lire_machine_turing("examples/machine_exemple.txt", mot2)
+    resultat2 = simuler_machine_turing(mot2, tm2).lower()
+    assert resultat2 == "reject", f"Mot '{mot2}' devrait être rejeté, obtenu: {resultat2}"
+    print(f"Résultat pour '{mot2}': {resultat2}")  # Résultat attendu : "rejeté"
+
+
+    print("Test Q12 passé avec succès")
+
+
+
 
 
 
@@ -320,6 +343,7 @@ def run_all_tests():
     test_q9_test_configuration()
     test_q10_lecture_machine_turing()
     test_q11_turing_machine_pas()
+    test_q12_turing_accept_reject()
 
 if __name__ == "__main__":
     import sys
@@ -347,5 +371,7 @@ if __name__ == "__main__":
             test_q10_lecture_machine_turing()
         elif test_name == "q11":
             test_q11_turing_machine_pas()
+        elif test_name == "q12":
+            test_q12_turing_accept_reject()
         else:
             print(f"Aucun test nomme '{test_name}'")

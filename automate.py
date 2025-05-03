@@ -266,7 +266,39 @@ def calculer_pas(tm: TuringMachine, config: TuringConfiguration) -> TuringConfig
     return TuringConfiguration(tape=tape, head_position=position_tete, current_state=nouvel_etat)
 
 
-
+def simuler_machine_turing(mot: str, tm: TuringMachine) -> str:
+    """
+    Simule le calcul d'une machine de Turing sur un mot donné et retourne 
+    "ACCEPT" si la machine accepte le mot, "REJECT" si elle le rejette.
+    
+    Args:
+        mot (str): Le mot d'entrée à traiter
+        tm (TuringMachine): La machine de Turing à simuler
+        
+    Returns:
+        str: "ACCEPT" ou "REJECT" selon le résultat du calcul
+    """
+    # Initialisation de la configuration
+    config = TuringConfiguration(
+        tape=deque(mot),
+        head_position=0,
+        current_state=tm.etat_initial
+    )
+    
+    # Simulation jusqu'à atteindre un état acceptant ou rejetant
+    while True:
+        # Vérifier si on est dans un état final
+        if config.current_state == tm.etat_accept:
+            return "ACCEPT"
+        if config.current_state == tm.etat_reject:
+            return "REJECT"
+        
+        # Calculer le prochain pas
+        try:
+            config = calculer_pas(tm, config)
+        except (ValueError, IndexError) as e:
+            # Si une erreur survient (transition non définie), considérer comme rejet
+            return "REJECT"
 
 if __name__ == "__main__":
     #q1 -- q3
@@ -373,4 +405,19 @@ if __name__ == "__main__":
     print("  État :", config.current_state)
     print("  Tête position :", config.head_position)
     print("  Bande :", list(config.tape))"""
+
+
+    # Exemple 1 : Mot qui devrait être accepté
+    mot1 = "101"
+    tm, config = lire_machine_turing("examples/machine_exemple.txt", mot1)  # Appel de lire_machine_turing
+    resultat1 = simuler_machine_turing(mot1, tm)  # Simulation avec la machine de Turing
+    print(f"Résultat pour '{mot1}': {resultat1}")  # Résultat attendu : "accepté"
+
+    # Exemple 2 : Mot qui devrait être rejeté
+    mot2 = "110"
+    tm, config = lire_machine_turing("examples/machine_exemple.txt", mot2)  # Appel de lire_machine_turing
+    resultat2 = simuler_machine_turing(mot2, tm)  # Simulation avec la machine de Turing
+    print(f"Résultat pour '{mot2}': {resultat2}")  # Résultat attendu : "rejeté"
+
+
 
