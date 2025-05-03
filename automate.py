@@ -419,7 +419,7 @@ if __name__ == "__main__":
     resultat2 = simuler_machine_turing(mot2, tm)  # Simulation avec la machine de Turing
     print(f"Résultat pour '{mot2}': {resultat2}")  # Résultat attendu : "rejeté"""
 
-    automate, config = lire_automate_et_mot("examples/Q7_2.txt", "012012")
+    automate, config = lire_automate_et_mot("examples/Q7_3_regle90.txt", "000100")
     simuler_automate(automate, config, mode_arret='pas', valeur_arret=15, afficher=True)
 
 

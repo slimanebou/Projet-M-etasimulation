@@ -163,7 +163,7 @@ def test_q6_affichage_visuel():
     
     print("\nTest d'affichage visuel reussi")
 
-def test_q7_1():
+def test_q7():
     print(">>> Test Q7_1 : Lecture et simulation d'automate")
 
     # Chargement de l'automate et du mot pour Q7_1
@@ -184,7 +184,6 @@ def test_q7_1():
     # Chargement de l'automate et du mot pour Q7_2
     automate_q7_2, config_q7_2 = lire_automate_et_mot("examples/Q7_2.txt", "012012")
 
-
     # Simulation de l'automate pour Q7_2
     print("\nDébut de la simulation de l'automate Q7_2...")
     simuler_automate(automate_q7_2, config_q7_2, mode_arret='pas', valeur_arret=15, afficher=True)
@@ -194,6 +193,40 @@ def test_q7_1():
     assert config_q7_2 is not None, "La configuration Q7_2 n'a pas été correctement chargée"
 
     print("\nTest Q7_2 réussi !")
+
+    # >>> Test Q7_3 : Lecture et simulation des règles 30 et 90
+    print("\n>>> Test Q7_3 : Simulation de l'automate avec règle 30")
+
+    # Chargement de l'automate et du mot pour la règle 30
+    automate_q7_3_30, config_q7_3_30 = lire_automate_et_mot("examples/Q7_3_regle30.txt", "000100")
+
+    # Simulation de l'automate pour la règle 30
+    print("\nDébut de la simulation de l'automate avec règle 30...")
+    simuler_automate(automate_q7_3_30, config_q7_3_30, mode_arret='pas', valeur_arret=15, afficher=True)
+
+    # Vérification
+    assert automate_q7_3_30 is not None, "L'automate avec règle 30 n'a pas été correctement chargé"
+    assert config_q7_3_30 is not None, "La configuration avec règle 30 n'a pas été correctement chargée"
+        
+    print("\nTest Q7_3 avec règle 30 réussi !")
+
+    # >>> Test Q7_3 : Simulation de l'automate avec règle 90
+    print("\n>>> Test Q7_3 : Simulation de l'automate avec règle 90")
+
+    # Chargement de l'automate et du mot pour la règle 90
+    automate_q7_3_90, config_q7_3_90 = lire_automate_et_mot("examples/Q7_3_regle90.txt", "000100")
+
+    # Simulation de l'automate pour la règle 90
+    print("\nDébut de la simulation de l'automate avec règle 90...")
+    simuler_automate(automate_q7_3_90, config_q7_3_90, mode_arret='pas', valeur_arret=15, afficher=True)
+
+    # Vérification
+    assert automate_q7_3_90 is not None, "L'automate avec règle 90 n'a pas été correctement chargé"
+    assert config_q7_3_90 is not None, "La configuration avec règle 90 n'a pas été correctement chargée"
+
+    print("\nTest Q7_3 avec règle 90 réussi !")
+
+
 
 
 
@@ -372,7 +405,7 @@ def run_all_tests():
     test_q4_calculer_prochaine_configuration()
     test_q5_simulation()
     test_q6_affichage_visuel() 
-    test_q7_1()
+    test_q7()
     test_q8_turing_machine_structure() 
     test_q9_test_configuration()
     test_q10_lecture_machine_turing()
@@ -398,7 +431,7 @@ if __name__ == "__main__":
         elif test_name == "q6":
             test_q6_affichage_visuel()
         elif test_name == "q7":
-            test_q7_1()
+            test_q7()
         elif test_name == "q8":
             test_q8_turing_machine_structure()
         elif test_name == "q9":
