@@ -229,6 +229,41 @@ def lire_machine_turing(fichier: str, mot_entree: str) -> tuple[TuringMachine, T
 
     return tm, config
 
+def calculer_pas(tm: TuringMachine, config: TuringConfiguration) -> TuringConfiguration:
+    etat_actuel = config.current_state
+    position_tete = config.head_position
+    tape = config.tape
+    
+    # Vérifier si l'état actuel et le symbole sur la bande existent dans les transitions
+    if etat_actuel not in tm.transitions:
+        raise ValueError(f"Etat {etat_actuel} non valide dans les transitions de la machine.")
+
+    # Lire le symbole sur la bande à la position de la tête
+    symbole_lu = tape[position_tete] if 0 <= position_tete < len(tape) else '□'
+
+    # Vérifier si la transition existe pour l'état actuel et le symbole lu
+    if symbole_lu not in tm.transitions[etat_actuel]:
+        raise ValueError(f"Aucune transition définie pour l'état {etat_actuel} avec le symbole {symbole_lu}.")
+
+    # Appliquer la transition
+    nouvel_etat, symbole_ecrit, direction = tm.transitions[etat_actuel][symbole_lu]
+    
+    # Écrire le symbole sur la bande à la position de la tête
+    tape[position_tete] = symbole_ecrit
+    
+    # Déplacer la tête
+    if direction == 'D':  # Droite
+        position_tete += 1
+        if position_tete == len(tape):  # Ajouter un espace vide à la fin de la bande si nécessaire
+            tape.append('□')
+    elif direction == 'G':  # Gauche
+        position_tete -= 1
+        if position_tete < 0:  # Ajouter un espace vide au début de la bande si nécessaire
+            tape.appendleft('□')
+            position_tete = 0
+    
+    # Retourner la nouvelle configuration
+    return TuringConfiguration(tape=tape, head_position=position_tete, current_state=nouvel_etat)
 
 
 
@@ -322,3 +357,20 @@ if __name__ == "__main__":
     print("Position de la tête :", config.head_position)
     print("Symbole sous la tête :", config.tape[config.head_position])
     print("État courant :", config.current_state)"""
+
+
+    """"mot = "10101"
+    tm, config = lire_machine_turing("examples/machine_exemple.txt", mot)
+
+    print("Avant le pas :")
+    print("  État :", config.current_state)
+    print("  Tête position :", config.head_position)
+    print("  Bande :", list(config.tape))
+
+    config = calculer_pas(tm, config)
+
+    print("Après un pas :")
+    print("  État :", config.current_state)
+    print("  Tête position :", config.head_position)
+    print("  Bande :", list(config.tape))"""
+

@@ -273,6 +273,37 @@ def test_q10_lecture_machine_turing():
     assert config.current_state == "q0"  # État de la machine au début
 
 
+def test_q11_turing_machine_pas():
+    print(">>> Test Q11 : Machine de Turing - Calculer un pas")
+
+    # Mot à traiter
+    mot = "10101"
+
+    # Appel de la fonction lire_machine_turing avec un fichier d'exemple et un mot
+    tm, config = lire_machine_turing("examples/machine_exemple.txt", mot)
+
+    print("Avant le pas :")
+    print("  État :", config.current_state)
+    print("  Tête position :", config.head_position)
+    print("  Bande :", ''.join(config.tape))
+
+    # Calcul d'un pas
+    config = calculer_pas(tm, config)
+
+    print("\nAprès un pas :")
+    print("  État :", config.current_state)
+    print("  Tête position :", config.head_position)
+    print("  Bande :", ''.join(config.tape))
+
+    # Vérification du résultat (exemple à adapter en fonction de la machine et du mot)
+    # Cela peut dépendre de la logique exacte de la machine de Turing et du mot
+    assert config.current_state == 'q1', f"Échec : attendu état 'q1', obtenu '{config.current_state}'"
+    assert config.head_position == 1, f"Échec : attendu position de tête 1, obtenu {config.head_position}"
+
+    print("✅ Test réussi !")
+
+
+
 
 
 
@@ -288,6 +319,7 @@ def run_all_tests():
     test_q8_turing_machine_structure() 
     test_q9_test_configuration()
     test_q10_lecture_machine_turing()
+    test_q11_turing_machine_pas()
 
 if __name__ == "__main__":
     import sys
@@ -313,5 +345,7 @@ if __name__ == "__main__":
             test_q9_test_configuration()
         elif test_name == "q10":
             test_q10_lecture_machine_turing()
+        elif test_name == "q11":
+            test_q11_turing_machine_pas()
         else:
             print(f"Aucun test nomme '{test_name}'")
