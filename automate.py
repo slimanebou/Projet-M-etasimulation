@@ -408,7 +408,7 @@ if __name__ == "__main__":
 
 
     # Exemple 1 : Mot qui devrait être accepté
-    mot1 = "101"
+    """mot1 = "101"
     tm, config = lire_machine_turing("examples/machine_exemple.txt", mot1)  # Appel de lire_machine_turing
     resultat1 = simuler_machine_turing(mot1, tm)  # Simulation avec la machine de Turing
     print(f"Résultat pour '{mot1}': {resultat1}")  # Résultat attendu : "accepté"
@@ -417,7 +417,11 @@ if __name__ == "__main__":
     mot2 = "110"
     tm, config = lire_machine_turing("examples/machine_exemple.txt", mot2)  # Appel de lire_machine_turing
     resultat2 = simuler_machine_turing(mot2, tm)  # Simulation avec la machine de Turing
-    print(f"Résultat pour '{mot2}': {resultat2}")  # Résultat attendu : "rejeté"
+    print(f"Résultat pour '{mot2}': {resultat2}")  # Résultat attendu : "rejeté"""
+
+    automate, config = lire_automate_et_mot("examples/Q7_1.txt", "000000100000")
+    simuler_automate(automate, config, mode_arret='pas', valeur_arret=7, afficher=True)
+
 
 
 

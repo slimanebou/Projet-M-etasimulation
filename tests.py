@@ -163,6 +163,24 @@ def test_q6_affichage_visuel():
     
     print("\nTest d'affichage visuel reussi")
 
+def test_q7_1():
+    print(">>> Test Q7_1 : Lecture et simulation d'automate")
+
+    # Chargement de l'automate et du mot
+    automate, config = lire_automate_et_mot("examples/Q7_1.txt", "000000100000")
+    print(f"Automate chargé : {automate}")
+    print(f"Configuration initiale : {config}")
+
+    # Simulation de l'automate avec les paramètres spécifiés
+    print("\nDébut de la simulation de l'automate...")
+    simuler_automate(automate, config, mode_arret='pas', valeur_arret=7, afficher=True)
+
+    # Vérification
+    assert automate is not None, "L'automate n'a pas été correctement chargé"
+    assert config is not None, "La configuration n'a pas été correctement chargée"
+        
+    print("\nTest Q7_1 réussi !")
+
 
 
 def test_q8_turing_machine_structure():
@@ -339,6 +357,7 @@ def run_all_tests():
     test_q4_calculer_prochaine_configuration()
     test_q5_simulation()
     test_q6_affichage_visuel() 
+    test_q7_1()
     test_q8_turing_machine_structure() 
     test_q9_test_configuration()
     test_q10_lecture_machine_turing()
@@ -363,6 +382,8 @@ if __name__ == "__main__":
             test_q5_simulation()
         elif test_name == "q6":
             test_q6_affichage_visuel()
+        elif test_name == "q7":
+            test_q7_1()
         elif test_name == "q8":
             test_q8_turing_machine_structure()
         elif test_name == "q9":
