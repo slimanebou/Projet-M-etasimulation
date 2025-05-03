@@ -166,20 +166,35 @@ def test_q6_affichage_visuel():
 def test_q7_1():
     print(">>> Test Q7_1 : Lecture et simulation d'automate")
 
-    # Chargement de l'automate et du mot
+    # Chargement de l'automate et du mot pour Q7_1
     automate, config = lire_automate_et_mot("examples/Q7_1.txt", "000000100000")
-    print(f"Automate chargé : {automate}")
-    print(f"Configuration initiale : {config}")
 
-    # Simulation de l'automate avec les paramètres spécifiés
-    print("\nDébut de la simulation de l'automate...")
+    # Simulation de l'automate pour Q7_1
+    print("\nDébut de la simulation de l'automate Q7_1...")
     simuler_automate(automate, config, mode_arret='pas', valeur_arret=7, afficher=True)
 
     # Vérification
-    assert automate is not None, "L'automate n'a pas été correctement chargé"
-    assert config is not None, "La configuration n'a pas été correctement chargée"
+    assert automate is not None, "L'automate Q7_1 n'a pas été correctement chargé"
+    assert config is not None, "La configuration Q7_1 n'a pas été correctement chargée"
         
     print("\nTest Q7_1 réussi !")
+
+    print("\n>>> Test Q7_2 : Lecture et simulation d'automate")
+
+    # Chargement de l'automate et du mot pour Q7_2
+    automate_q7_2, config_q7_2 = lire_automate_et_mot("examples/Q7_2.txt", "012012")
+
+
+    # Simulation de l'automate pour Q7_2
+    print("\nDébut de la simulation de l'automate Q7_2...")
+    simuler_automate(automate_q7_2, config_q7_2, mode_arret='pas', valeur_arret=15, afficher=True)
+
+    # Vérification
+    assert automate_q7_2 is not None, "L'automate Q7_2 n'a pas été correctement chargé"
+    assert config_q7_2 is not None, "La configuration Q7_2 n'a pas été correctement chargée"
+
+    print("\nTest Q7_2 réussi !")
+
 
 
 
