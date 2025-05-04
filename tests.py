@@ -82,7 +82,7 @@ def test_q4_calculer_prochaine_configuration():
     print("Nouvelle Configuration avec bords :", nouvelle_config.etats)
 
     # Verification du resultat
-    assert nouvelle_config.etats == expected, f"Erreur dans la mise à jour de la configuration, attendu {expected}, obtenu {nouvelle_config.etats}"
+    assert nouvelle_config.etats == expected, f"Erreur dans la mise a jour de la configuration, attendu {expected}, obtenu {nouvelle_config.etats}"
 
 
 
@@ -158,7 +158,7 @@ def test_q6_affichage_visuel():
     print("\nSimulation avec affichage visuel (5 pas):")
     resultats = simuler_automate_avec_affichage(automate, config, mode_arret='pas', valeur_arret=5)
     
-    # Verification que la simulation a bien fonctionné
+    # Verification que la simulation a bien fonctionne
     assert (len(resultats) - 1) == 5, f"Devrait avoir 5 pas + config initiale (obtenu: {len(resultats)})"
     
     print("\nTest d'affichage visuel reussi")
@@ -170,14 +170,14 @@ def test_q7():
     automate, config = lire_automate_et_mot("examples/Q7_1.txt", "000000100000")
 
     # Simulation de l'automate pour Q7_1
-    print("\nDébut de la simulation de l'automate Q7_1...")
+    print("\nDebut de la simulation de l'automate Q7_1...")
     simuler_automate(automate, config, mode_arret='pas', valeur_arret=7, afficher=True)
 
-    # Vérification
-    assert automate is not None, "L'automate Q7_1 n'a pas été correctement chargé"
-    assert config is not None, "La configuration Q7_1 n'a pas été correctement chargée"
+    # Verification
+    assert automate is not None, "L'automate Q7_1 n'a pas ete correctement charge"
+    assert config is not None, "La configuration Q7_1 n'a pas ete correctement chargee"
         
-    print("\nTest Q7_1 réussi !")
+    print("\nTest Q7_1 reussi !")
 
     print("\n>>> Test Q7_2 : Lecture et simulation d'automate")
 
@@ -185,46 +185,46 @@ def test_q7():
     automate_q7_2, config_q7_2 = lire_automate_et_mot("examples/Q7_2.txt", "012012")
 
     # Simulation de l'automate pour Q7_2
-    print("\nDébut de la simulation de l'automate Q7_2...")
+    print("\nDebut de la simulation de l'automate Q7_2...")
     simuler_automate(automate_q7_2, config_q7_2, mode_arret='pas', valeur_arret=15, afficher=True)
 
-    # Vérification
-    assert automate_q7_2 is not None, "L'automate Q7_2 n'a pas été correctement chargé"
-    assert config_q7_2 is not None, "La configuration Q7_2 n'a pas été correctement chargée"
+    # Verification
+    assert automate_q7_2 is not None, "L'automate Q7_2 n'a pas ete correctement charge"
+    assert config_q7_2 is not None, "La configuration Q7_2 n'a pas ete correctement charge"
 
-    print("\nTest Q7_2 réussi !")
+    print("\nTest Q7_2 reussi !")
 
-    # >>> Test Q7_3 : Lecture et simulation des règles 30 et 90
-    print("\n>>> Test Q7_3 : Simulation de l'automate avec règle 30")
+    # >>> Test Q7_3 : Lecture et simulation des regles 30 et 90
+    print("\n>>> Test Q7_3 : Simulation de l'automate avec regle 30")
 
-    # Chargement de l'automate et du mot pour la règle 30
+    # Chargement de l'automate et du mot pour la regle 30
     automate_q7_3_30, config_q7_3_30 = lire_automate_et_mot("examples/Q7_3_regle30.txt", "000100")
 
-    # Simulation de l'automate pour la règle 30
-    print("\nDébut de la simulation de l'automate avec règle 30...")
+    # Simulation de l'automate pour la regle 30
+    print("\nDebut de la simulation de l'automate avec regle 30...")
     simuler_automate(automate_q7_3_30, config_q7_3_30, mode_arret='pas', valeur_arret=15, afficher=True)
 
-    # Vérification
-    assert automate_q7_3_30 is not None, "L'automate avec règle 30 n'a pas été correctement chargé"
-    assert config_q7_3_30 is not None, "La configuration avec règle 30 n'a pas été correctement chargée"
+    # Verification
+    assert automate_q7_3_30 is not None, "L'automate avec regle 30 n'a pas ete correctement charge"
+    assert config_q7_3_30 is not None, "La configuration avec regle 30 n'a pas ete correctement charge"
         
-    print("\nTest Q7_3 avec règle 30 réussi !")
+    print("\nTest Q7_3 avec regle 30 reussi !")
 
-    # >>> Test Q7_3 : Simulation de l'automate avec règle 90
-    print("\n>>> Test Q7_3 : Simulation de l'automate avec règle 90")
+    # >>> Test Q7_3 : Simulation de l'automate avec regle 90
+    print("\n>>> Test Q7_3 : Simulation de l'automate avec regle 90")
 
-    # Chargement de l'automate et du mot pour la règle 90
+    # Chargement de l'automate et du mot pour la regle 90
     automate_q7_3_90, config_q7_3_90 = lire_automate_et_mot("examples/Q7_3_regle90.txt", "000100")
 
-    # Simulation de l'automate pour la règle 90
-    print("\nDébut de la simulation de l'automate avec règle 90...")
+    # Simulation de l'automate pour la regle 90
+    print("\nDebut de la simulation de l'automate avec regle 90...")
     simuler_automate(automate_q7_3_90, config_q7_3_90, mode_arret='pas', valeur_arret=15, afficher=True)
 
-    # Vérification
-    assert automate_q7_3_90 is not None, "L'automate avec règle 90 n'a pas été correctement chargé"
-    assert config_q7_3_90 is not None, "La configuration avec règle 90 n'a pas été correctement chargée"
+    # Verification
+    assert automate_q7_3_90 is not None, "L'automate avec regle 90 n'a pas ete correctement charge"
+    assert config_q7_3_90 is not None, "La configuration avec regle 90 n'a pas ete correctement charge"
 
-    print("\nTest Q7_3 avec règle 90 réussi !")
+    print("\nTest Q7_3 avec regle 90 reussi !")
 
 
 
@@ -232,10 +232,10 @@ def test_q7():
 
 
 def test_q8_turing_machine_structure():
-    # Création d'une machine de Turing minimale
+    # Creation d'une machine de Turing minimale
     tm = TuringMachine()
     
-    # Exemple d'initialisation et vérification des valeurs
+    # Exemple d'initialisation et verification des valeurs
     tm.etats = {'q0', 'q1'}
     tm.alphabet = {'0', '1', '□'}
     tm.blank_symbol = '□'
@@ -250,13 +250,13 @@ def test_q8_turing_machine_structure():
     assert 'q0' in tm.etats, "State 'q0' not found"
     assert '0' in tm.alphabet, "Symbol '0' not found"
     assert tm.transitions['q0']['0'] == ('q1', '1', 'R'), "Transition incorrecte"
-    assert tm.etat_initial == 'q0', "Inadéquation etat Initial "
-    assert tm.etat_accept == 'q_accept', "Inadéquation etat eccept "
-    assert tm.etat_reject == 'q_reject', "Inadéquation etat reject"
+    assert tm.etat_initial == 'q0', "Inadequation etat Initial "
+    assert tm.etat_accept == 'q_accept', "Inadequation etat eccept "
+    assert tm.etat_reject == 'q_reject', "Inadequation etat reject"
 
 
 def test_q9_test_configuration():
-    # Création de la machine de Turing
+    # Creation de la machine de Turing
     machine = TuringMachine()
     machine.etats = {'q0', 'q_accept', 'q_reject'}
     machine.etat_initial = 'q0'
@@ -270,11 +270,11 @@ def test_q9_test_configuration():
         }
     }
 
-    # Entrée : "101" → attendu après inversion : "010"
+    # Entree : "101" → attendu apres inversion : "010"
     tape = deque(['1', '0', '1', '□'])
     config = TuringConfiguration(tape, head_position=0, current_state=machine.etat_initial)
 
-    # Fonction d'exécution
+    # Fonction d'execution
     while config.current_state not in {machine.etat_accept, machine.etat_reject}:
         symbole_lu = config.tape[config.head_position]
         if config.current_state in machine.transitions and symbole_lu in machine.transitions[config.current_state]:
@@ -296,16 +296,16 @@ def test_q9_test_configuration():
             config.current_state = machine.etat_reject
             break
 
-    # Résultat attendu : "010"
+    # Resultat attendu : "010"
     resultat = ''.join(config.tape).strip('□')
     print("Ruban final :", resultat)
-    print("État final :", config.current_state)
+    print("Etat final :", config.current_state)
 
     # Test
-    assert resultat == "010", f"Échec : attendu '010', obtenu '{resultat}'"
-    assert config.current_state == machine.etat_accept, "Échec : la machine n'a pas terminé en état acceptant"
+    assert resultat == "010", f"Echec : attendu '010', obtenu '{resultat}'"
+    assert config.current_state == machine.etat_accept, "Echec : la machine n'a pas termine en etat acceptant"
 
-    print("✅ Test réussi !")
+    print("✅ Test reussi !")
 
 def test_q10_lecture_machine_turing():
     print(">>> Test Q10 : Lecture de la machine de Turing depuis un fichier")
@@ -326,69 +326,69 @@ def test_q10_lecture_machine_turing():
     # Affichage de la configuration initiale
     print("\nConfiguration initiale :")
     print("Bande :", ''.join(config.tape))
-    print("Position de la tête :", config.head_position)
-    print("Symbole sous la tête :", config.tape[config.head_position])
-    print("État courant :", config.current_state)
+    print("Position de la tete :", config.head_position)
+    print("Symbole sous la tete :", config.tape[config.head_position])
+    print("Etat courant :", config.current_state)
 
-    # Assertions basiques pour vérifier que les données sont bien lues
-    assert tm.etat_initial == "q0"  # Par exemple, à adapter selon ton fichier
+    # Assertions basiques pour verifier que les donnees sont bien lues
+    assert tm.etat_initial == "q0"  # Par exemple, a adapter selon ton fichier
     assert tm.etat_accept == "q_accept"
     assert "q0" in tm.transitions
-    assert len(config.tape) > 0  # Vérifie que la bande n'est pas vide
-    assert config.head_position >= 0  # Position de la tête valide
-    assert config.current_state == "q0"  # État de la machine au début
+    assert len(config.tape) > 0  # Verifie que la bande n'est pas vide
+    assert config.head_position >= 0  # Position de la tete valide
+    assert config.current_state == "q0"  # Etat de la machine au debut
 
 
 def test_q11_turing_machine_pas():
     print(">>> Test Q11 : Machine de Turing - Calculer un pas")
 
-    # Mot à traiter
+    # Mot a traiter
     mot = "10101"
 
     # Appel de la fonction lire_machine_turing avec un fichier d'exemple et un mot
     tm, config = lire_machine_turing("examples/machine_exemple2.txt", mot)
 
     print("Avant le pas :")
-    print("  État :", config.current_state)
-    print("  Tête position :", config.head_position)
+    print("  Etat :", config.current_state)
+    print("  Tete position :", config.head_position)
     print("  Bande :", ''.join(config.tape))
 
     # Calcul d'un pas
     config = calculer_pas(tm, config)
 
-    print("\nAprès un pas :")
-    print("  État :", config.current_state)
-    print("  Tête position :", config.head_position)
+    print("\nApres un pas :")
+    print("  Etat :", config.current_state)
+    print("  Tete position :", config.head_position)
     print("  Bande :", ''.join(config.tape))
 
-    # Vérification du résultat (exemple à adapter en fonction de la machine et du mot)
-    # Cela peut dépendre de la logique exacte de la machine de Turing et du mot
-    assert config.current_state == 'q1', f"Échec : attendu état 'q1', obtenu '{config.current_state}'"
-    assert config.head_position == 1, f"Échec : attendu position de tête 1, obtenu {config.head_position}"
+    # Verification du resultat (exemple a adapter en fonction de la machine et du mot)
+    # Cela peut dependre de la logique exacte de la machine de Turing et du mot
+    assert config.current_state == 'q1', f"Echec : attendu etat 'q1', obtenu '{config.current_state}'"
+    assert config.head_position == 1, f"Echec : attendu position de tete 1, obtenu {config.head_position}"
 
-    print("✅ Test réussi !")
+    print("✅ Test reussi !")
 
 
 def test_q12_turing_accept_reject():
     print(">>> Test Q12 : Turing - acceptation et rejet\n")
 
-    # Mot accepté
+    # Mot accepte
     mot1 = "101"
     tm1, _ = lire_machine_turing("examples/machine_exemple.txt", mot1)
     resultat1 = simuler_machine_turing(mot1, tm1).lower()
-    assert resultat1 == "accept", f"Mot '{mot1}' devrait être accepté, obtenu: {resultat1}"
-    print(f"Résultat pour '{mot1}': {resultat1}")  # Résultat attendu : "accepté"
+    assert resultat1 == "accept", f"Mot '{mot1}' devrait etre accepte, obtenu: {resultat1}"
+    print(f"Resultat pour '{mot1}': {resultat1}")  # Resultat attendu : "accepte"
 
 
-    # Mot rejeté
+    # Mot rejete
     mot2 = "110"
     tm2, _ = lire_machine_turing("examples/machine_exemple.txt", mot2)
     resultat2 = simuler_machine_turing(mot2, tm2).lower()
-    assert resultat2 == "reject", f"Mot '{mot2}' devrait être rejeté, obtenu: {resultat2}"
-    print(f"Résultat pour '{mot2}': {resultat2}")  # Résultat attendu : "rejeté"
+    assert resultat2 == "reject", f"Mot '{mot2}' devrait etre rejete, obtenu: {resultat2}"
+    print(f"Resultat pour '{mot2}': {resultat2}")  # Resultat attendu : "rejete"
 
 
-    print("Test Q12 passé avec succès")
+    print("Test Q12 passe avec succes")
 
 
 

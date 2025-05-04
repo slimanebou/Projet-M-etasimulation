@@ -30,7 +30,7 @@ class AutomateCellulaire:
 # structure d'une configuration
 class Configuration:
     def __init__(self, etats: list):
-        self.etats = etats  # Liste des etats des cellules à l’instant t
+        self.etats = etats  # Liste des etats des cellules a l’instant t
         self.etats = [str(e) for e in etats]  # Conversion en string
 
 
@@ -168,23 +168,23 @@ def simuler_automate_avec_affichage(automate: AutomateCellulaire, config_initial
 # structure de maching de turing 
 class TuringMachine:
     def __init__(self):
-        self.etats = set()           # Ensemble des états (ex: {'q0', 'q1', 'q_accept', 'q_reject'})
+        self.etats = set()           # Ensemble des etats (ex: {'q0', 'q1', 'q_accept', 'q_reject'})
         self.alphabet = {'0', '1', '□'} # Alphabet de travail (0, 1, et le symbole blanc □)
         self.blank_symbol = '□'        # Symbole blanc
-        self.input_alphabet = {'0', '1'} # Alphabet d'entrée (sous-ensemble de l'alphabet de travail)
+        self.input_alphabet = {'0', '1'} # Alphabet d'entre (sous-ensemble de l'alphabet de travail)
         
         # Fonction de transition : un dictionnaire de dictionnaires de tuples
-        # Format : {état: {symbole: (nouvel_état, symbole_écrit, direction)}}
+        # Format : {etat: {symbole: (nouvel_etat, symbole_ecrit, direction)}}
         self.transitions = {}
         
-        self.etat_initial = None      # État initial (ex: 'q0')
-        self.etat_accept = None       # État acceptant (ex: 'q_accept')
-        self.etat_reject = None       # État rejetant (ex: 'q_reject')
+        self.etat_initial = None      # Etat initial (ex: 'q0')
+        self.etat_accept = None       # Etat acceptant (ex: 'q_accept')
+        self.etat_reject = None       # Etat rejetant (ex: 'q_reject')
 
 
 # Question 9 
 # Structure d'une configuration 
-# deque (double-ended queue) Ajouter à gauche ou à droite (appendleft, append)
+# deque (double-ended queue) Ajouter a gauche ou a droite (appendleft, append)
 from collections import deque
 class TuringConfiguration:
     def __init__(self, tape, head_position, current_state):
@@ -192,7 +192,7 @@ class TuringConfiguration:
         self.head_position = head_position # Index entier
         self.current_state = current_state # ex: 'q0'
 
-
+# Question 10
 
 def lire_machine_turing(fichier: str, mot_entree: str) -> tuple[TuringMachine, TuringConfiguration]:
     tm = TuringMachine()
@@ -229,36 +229,38 @@ def lire_machine_turing(fichier: str, mot_entree: str) -> tuple[TuringMachine, T
 
     return tm, config
 
+# Question 11
+
 def calculer_pas(tm: TuringMachine, config: TuringConfiguration) -> TuringConfiguration:
     etat_actuel = config.current_state
     position_tete = config.head_position
     tape = config.tape
     
-    # Vérifier si l'état actuel et le symbole sur la bande existent dans les transitions
+    # Verifier si l'etat actuel et le symbole sur la bande existent dans les transitions
     if etat_actuel not in tm.transitions:
         raise ValueError(f"Etat {etat_actuel} non valide dans les transitions de la machine.")
 
-    # Lire le symbole sur la bande à la position de la tête
+    # Lire le symbole sur la bande a la position de la tete
     symbole_lu = tape[position_tete] if 0 <= position_tete < len(tape) else '□'
 
-    # Vérifier si la transition existe pour l'état actuel et le symbole lu
+    # Verifier si la transition existe pour l'etat actuel et le symbole lu
     if symbole_lu not in tm.transitions[etat_actuel]:
-        raise ValueError(f"Aucune transition définie pour l'état {etat_actuel} avec le symbole {symbole_lu}.")
+        raise ValueError(f"Aucune transition definie pour l'etat {etat_actuel} avec le symbole {symbole_lu}.")
 
     # Appliquer la transition
     nouvel_etat, symbole_ecrit, direction = tm.transitions[etat_actuel][symbole_lu]
     
-    # Écrire le symbole sur la bande à la position de la tête
+    # ecrire le symbole sur la bande a la position de la tete
     tape[position_tete] = symbole_ecrit
     
-    # Déplacer la tête
+    # Deplacer la tete
     if direction == 'D':  # Droite
         position_tete += 1
-        if position_tete == len(tape):  # Ajouter un espace vide à la fin de la bande si nécessaire
+        if position_tete == len(tape):  # Ajouter un espace vide a la fin de la bande si neecessaire
             tape.append('□')
     elif direction == 'G':  # Gauche
         position_tete -= 1
-        if position_tete < 0:  # Ajouter un espace vide au début de la bande si nécessaire
+        if position_tete < 0:  # Ajouter un espace vide au debut de la bande si necessaire
             tape.appendleft('□')
             position_tete = 0
     
@@ -266,17 +268,19 @@ def calculer_pas(tm: TuringMachine, config: TuringConfiguration) -> TuringConfig
     return TuringConfiguration(tape=tape, head_position=position_tete, current_state=nouvel_etat)
 
 
+# Question 12
+
 def simuler_machine_turing(mot: str, tm: TuringMachine) -> str:
     """
-    Simule le calcul d'une machine de Turing sur un mot donné et retourne 
+    Simule le calcul d'une machine de Turing sur un mot donne et retourne 
     "ACCEPT" si la machine accepte le mot, "REJECT" si elle le rejette.
     
     Args:
-        mot (str): Le mot d'entrée à traiter
-        tm (TuringMachine): La machine de Turing à simuler
+        mot (str): Le mot d'entre a traiter
+        tm (TuringMachine): La machine de Turing aS simuler
         
     Returns:
-        str: "ACCEPT" ou "REJECT" selon le résultat du calcul
+        str: "ACCEPT" ou "REJECT" selon le resultat du calcul
     """
     # Initialisation de la configuration
     config = TuringConfiguration(
@@ -285,9 +289,9 @@ def simuler_machine_turing(mot: str, tm: TuringMachine) -> str:
         current_state=tm.etat_initial
     )
     
-    # Simulation jusqu'à atteindre un état acceptant ou rejetant
+    # Simulation jusqu'a atteindre un etat acceptant ou rejetant
     while True:
-        # Vérifier si on est dans un état final
+        # Verifier si on est dans un etat final
         if config.current_state == tm.etat_accept:
             return "ACCEPT"
         if config.current_state == tm.etat_reject:
@@ -297,8 +301,18 @@ def simuler_machine_turing(mot: str, tm: TuringMachine) -> str:
         try:
             config = calculer_pas(tm, config)
         except (ValueError, IndexError) as e:
-            # Si une erreur survient (transition non définie), considérer comme rejet
+            # Si une erreur survient (transition non definie), considerer comme rejet
             return "REJECT"
+
+
+# Question 14 
+
+"""Le probleme HALTING-CELLULAR-AUTOMATON demande si un automate cellulaire A, partant d'un etat s et d'un mot w, atteindra un etat contenant s lors de son evolution. 
+Notre code simule cet automate en appliquant des regles de transition et verifie si l'etat cible est atteint. 
+Cependant, ce probleme est indecidable, car les automates cellulaires peuvent simuler n'importe quelle machine de Turing, y compris des calculs infinis. 
+Ainsi, determiner si l'automate atteindra s revient au probleme de l'arret, qui est indecidable (aucun algorithme ne peut toujours repondre).
+Ce qui fait que la simulation peut donc boucler indefiniment pour certaines configurations, confirmant qu'il n'existe pas de methode generale pour resoudre ce probleme.
+Seules des restrictions (automates finis ou regles simplifies) le rendent decidable."""
 
 if __name__ == "__main__":
     #q1 -- q3
@@ -377,8 +391,8 @@ if __name__ == "__main__":
     """mot = "10101"
     tm, config = lire_machine_turing("examples/machine_exemple.txt", mot)
 
-    print("État initial :", tm.etat_initial)
-    print("État acceptant :", tm.etat_accept)
+    print("Etat initial :", tm.etat_initial)
+    print("Etat acceptant :", tm.etat_accept)
     print("Transitions :")
     for etat, trans in tm.transitions.items():
         for symbole, action in trans.items():
@@ -386,38 +400,38 @@ if __name__ == "__main__":
 
     print("\nConfiguration initiale :")
     print("Bande :", ''.join(config.tape))
-    print("Position de la tête :", config.head_position)
-    print("Symbole sous la tête :", config.tape[config.head_position])
-    print("État courant :", config.current_state)"""
+    print("Position de la tete :", config.head_position)
+    print("Symbole sous la tete :", config.tape[config.head_position])
+    print("Etat courant :", config.current_state)"""
 
 
     """"mot = "10101"
     tm, config = lire_machine_turing("examples/machine_exemple.txt", mot)
 
     print("Avant le pas :")
-    print("  État :", config.current_state)
-    print("  Tête position :", config.head_position)
+    print("  Etat :", config.current_state)
+    print("  Tete position :", config.head_position)
     print("  Bande :", list(config.tape))
 
     config = calculer_pas(tm, config)
 
-    print("Après un pas :")
-    print("  État :", config.current_state)
-    print("  Tête position :", config.head_position)
+    print("Apres un pas :")
+    print("  Etat :", config.current_state)
+    print("  Tete position :", config.head_position)
     print("  Bande :", list(config.tape))"""
 
 
-    # Exemple 1 : Mot qui devrait être accepté
+    # Exemple 1 : Mot qui devrait etre accepte
     """mot1 = "101"
     tm, config = lire_machine_turing("examples/machine_exemple.txt", mot1)  # Appel de lire_machine_turing
     resultat1 = simuler_machine_turing(mot1, tm)  # Simulation avec la machine de Turing
-    print(f"Résultat pour '{mot1}': {resultat1}")  # Résultat attendu : "accepté"
+    print(f"Resultat pour '{mot1}': {resultat1}")  # Resultat attendu : "accepte"
 
-    # Exemple 2 : Mot qui devrait être rejeté
+    # Exemple 2 : Mot qui devrait etre rejete
     mot2 = "110"
     tm, config = lire_machine_turing("examples/machine_exemple.txt", mot2)  # Appel de lire_machine_turing
     resultat2 = simuler_machine_turing(mot2, tm)  # Simulation avec la machine de Turing
-    print(f"Résultat pour '{mot2}': {resultat2}")  # Résultat attendu : "rejeté"""
+    print(f"Resultat pour '{mot2}': {resultat2}")  # Resultat attendu : "rejete"""
 
     automate, config = lire_automate_et_mot("examples/Q7_3_regle90.txt", "000100")
     simuler_automate(automate, config, mode_arret='pas', valeur_arret=15, afficher=True)
