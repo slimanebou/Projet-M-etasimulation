@@ -174,7 +174,8 @@ class TuringMachine:
         self.input_alphabet = {'0', '1'} # Alphabet d'entrée (sous-ensemble de l'alphabet de travail)
         
         # Fonction de transition : un dictionnaire de dictionnaires de tuples
-        # Format : {état: {symbole: (nouvel_état, symbole_écrit, direction)}}
+        # Format : {état: {symbole: (nouvel_état, symbole_écrit, direction)}}  
+        #           {'q0': {'0': ('q1', '1', 'R')}}
         self.transitions = {}
         
         self.etat_initial = None      # État initial (ex: 'q0')
@@ -300,6 +301,112 @@ def simuler_machine_turing(mot: str, tm: TuringMachine) -> str:
             # Si une erreur survient (transition non définie), considérer comme rejet
             return "REJECT"
 
+
+
+# Question 13 
+def machine_turing_vers_automate(tm: TuringMachine) -> AutomateCellulaire:
+    """
+    Convertit une machine de Turing en un automate cellulaire qui la simule.
+    
+    Args:
+        tm (TuringMachine): La machine de Turing à simuler
+        
+    Returns:
+        AutomateCellulaire: L'automate cellulaire équivalent
+        
+    Principe:
+        - Chaque cellule de l'automate représente une case de la bande de la machine de Turing
+        - L'état d'une cellule est un tuple (q, s) où:
+          * q est '*' si la tête n'est pas sur cette case, sinon c'est l'état de la MT
+          * s est le symbole sur la bande
+        - Les règles de transition simulent le comportement de la MT
+    """
+    
+    # Création de (ensemble) l'espace d'états de l'automate cellulaire pour stocker les états, ignorer les doublons
+    etats_automate = set()
+    
+    # États pour les cellules sans tête: (*, symbole) pour prépararer de tous les états possibles sans tete 
+    #(*, '0'), (*, '1'), (*, '□') pour tout l'alphabet de MT
+    for symbole in tm.alphabet:
+        etats_automate.add(('*', symbole))
+
+    # États pour les cellules avec tête: (etat_mt, symbole), initialise toutes les combinaisons possibles
+    # ('q0', '0'), ('q0', '1'), ('q0', '□') pour tout l'alphabet de cette etat
+    for etat in tm.etats:
+        for symbole in tm.alphabet:
+            etats_automate.add((etat, symbole))
+    
+    # Construction (dictionnaire) des règles de transition
+    regles = {}
+    
+    # Cas 1: La tête n'est dans aucun des 3 cellules du voisinage ( ('*', s1), ('*', s2), ('*', s3) )
+    # Dans ce cas, on ne change rien
+    for s1 in tm.alphabet:
+        for s2 in tm.alphabet:
+            for s3 in tm.alphabet:
+                regles[ (('*', s1), ('*', s2), ('*', s3)) ] = ('*', s2)
+    
+    # Cas 2: La tête est sur la cellule centrale
+    # transition : {état: {symbole: (nouvel_état, symbole_écrit, direction)}}  = {'q0': {'0': ('q1', '1', 'R')}}
+    for etat in tm.transitions:
+        for symbole in tm.transitions[etat]:
+            nouvel_etat, nouveau_symbole, direction = tm.transitions[etat][symbole]
+            
+            # Pour tous les symboles possibles à gauche et à droite
+            for s_gauche in tm.alphabet:
+                for s_droite in tm.alphabet:
+                    # Selon la direction du mouvement
+                    if direction == 'D':  # Tête se déplace à droite
+                        # Règle pour la cellule centrale (devient sans tête)
+                        regles[ (('*', s_gauche), (etat, symbole), ('*', s_droite)) ] = ('*', nouveau_symbole)
+                        
+                        # Règle pour la cellule de droite (devient avec tête)
+                        regles[ ((etat, symbole), ('*', s_droite), ('*', s_droite)) ] = (nouvel_etat, s_droite)
+                        
+                    elif direction == 'G':  # Tête se déplace à gauche
+                        # Règle pour la cellule centrale (devient sans tête)
+                        regles[ (('*', s_gauche), (etat, symbole), ('*', s_droite)) ] = ('*', nouveau_symbole)
+                        
+                        # Règle pour la cellule de gauche (devient avec tête)
+                        regles[ (('*', s_gauche), ('*', s_gauche), (etat, symbole)) ] = (nouvel_etat, s_gauche)
+        
+    return AutomateCellulaire(etats=list(etats_automate), 
+                            regles=regles, 
+                            etat_vide=('*', tm.blank_symbol))
+
+def config_mt_vers_config_ac(config_mt: TuringConfiguration) -> Configuration:
+    """
+    Convertit une configuration de machine de Turing en configuration d'automate cellulaire.
+    
+    Args:
+        config_mt (TuringConfiguration): Configuration de la MT
+        
+    Returns:
+        Configuration: Configuration équivalente pour l'automate cellulaire
+        
+    Exemple:
+        Si la MT est dans l'état q0, tête sur le 2ème symbole (0) de "101",
+        la config AC sera: [(*,'1'), (q0,'0'), (*,'1')]
+    """
+
+
+    etats_ac = []
+    for i, symbole in enumerate(config_mt.tape):
+        if i == config_mt.head_position:
+            etats_ac.append((config_mt.current_state, symbole))
+        else:
+            etats_ac.append(('*', symbole))
+    
+    # convertit automatiquement les états en strings         
+    return Configuration([str(e) for e in etats_ac])
+
+
+def simuler_mt_avec_ac(tm: TuringMachine, ac: AutomateCellulaire ):
+    print("simulation n'est pas encore faite")
+
+
+
+
 if __name__ == "__main__":
     #q1 -- q3
     """automate, config = lire_automate_et_mot("examples/regles.txt", "0001000")
@@ -421,6 +528,7 @@ if __name__ == "__main__":
 
     automate, config = lire_automate_et_mot("examples/Q7_3_regle90.txt", "000100")
     simuler_automate(automate, config, mode_arret='pas', valeur_arret=15, afficher=True)
+
 
 
 
