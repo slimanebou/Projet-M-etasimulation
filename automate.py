@@ -174,7 +174,7 @@ class TuringMachine:
         self.input_alphabet = {'0', '1'} # Alphabet d'entre (sous-ensemble de l'alphabet de travail)
         
         # Fonction de transition : un dictionnaire de dictionnaires de tuples
-        # Format : {etat: {symbole: (nouvel_etat, symbole_ecrit, direction)}}
+        # Format : {état: {symbole: (nouvel_état, symbole_écrit, direction)}}
         self.transitions = {}
         
         self.etat_initial = None      # Etat initial (ex: 'q0')
@@ -304,16 +304,6 @@ def simuler_machine_turing(mot: str, tm: TuringMachine) -> str:
             # Si une erreur survient (transition non definie), considerer comme rejet
             return "REJECT"
 
-
-# Question 14 
-
-"""Le probleme HALTING-CELLULAR-AUTOMATON demande si un automate cellulaire A, partant d'un etat s et d'un mot w, atteindra un etat contenant s lors de son evolution. 
-Notre code simule cet automate en appliquant des regles de transition et verifie si l'etat cible est atteint. 
-Cependant, ce probleme est indecidable, car les automates cellulaires peuvent simuler n'importe quelle machine de Turing, y compris des calculs infinis. 
-Ainsi, determiner si l'automate atteindra s revient au probleme de l'arret, qui est indecidable (aucun algorithme ne peut toujours repondre).
-Ce qui fait que la simulation peut donc boucler indefiniment pour certaines configurations, confirmant qu'il n'existe pas de methode generale pour resoudre ce probleme.
-Seules des restrictions (automates finis ou regles simplifies) le rendent decidable."""
-
 if __name__ == "__main__":
     #q1 -- q3
     """automate, config = lire_automate_et_mot("examples/regles.txt", "0001000")
@@ -435,6 +425,7 @@ if __name__ == "__main__":
 
     automate, config = lire_automate_et_mot("examples/Q7_3_regle90.txt", "000100")
     simuler_automate(automate, config, mode_arret='pas', valeur_arret=15, afficher=True)
+
 
 
 
